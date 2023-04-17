@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Scrolling Picture Generator</title>
+	<style>
+		body {
+			height: 2000px; /* Height of the page to enable scrolling */
+			background-color: #2d2d2d;
+			color: #fff;
+			font-family: Arial, sans-serif;
+		}
+
+		h1, p {
+			text-align: center;
+		}
+
+		.picture {
+			height: 300px;
+			width: 300px;
+			margin: 20px;
+			background-color: #444;
+			float: left;
+			display: none;
+			/* Hides the pictures by default */
+			position: relative;
+		}
+
+		.downloadButton {
+			display: block;
+			margin-top: 5px;
+			position: absolute;
+			bottom: 5px;
+			left: 50%;
+			transform: translateX(-50%);
+			background-color: #fff;
+			color: #444;
+			padding: 5px 10px;
+			border-radius: 5px;
+			text-align: center;
+			text-decoration: none;
+			font-weight: bold;
+		}
+
+		.downloadButton:hover {
+			background-color: #444;
+			color: #fff;
+		}
+	</style>
+</head>
+<body onscroll="generatePictures()">
+	<h1>Scrolling Picture Generator</h1>
+	<p>Scroll down to generate pictures.</p>
+	<div id="pictureContainer"></div>
+
+	<script>
+		var pictures = ["picture1.jpg", "picture2.jpg", "picture3.jpg", "picture4.jpg", "picture5.jpg"];
+
+		function generatePictures() {
+			var pictureContainer = document.getElementById("pictureContainer");
+			var picturesToGenerate = Math.floor((window.innerHeight + window.scrollY) / 400); /* Generates pictures every 400 pixels scrolled */
+			for (var i = 0; i < picturesToGenerate; i++) {
+				var randomNumber = Math.floor(Math.random() * pictures.length);
+				var picture = document.createElement("div");
+				picture.className = "picture";
+				picture.style.backgroundImage = "url('" + pictures[randomNumber] + "')";
+
+				var downloadButton = document.createElement("a");
+				downloadButton.className = "downloadButton";
+				downloadButton.innerHTML = "Download";
+				downloadButton.href = pictures[randomNumber];
+				downloadButton.download = pictures[randomNumber];
+				picture.appendChild(downloadButton);
+
+				pictureContainer.appendChild(picture);
+				picture.style.display = "block";
+			}
+		}
+	</script>
+</body>
+</html>
